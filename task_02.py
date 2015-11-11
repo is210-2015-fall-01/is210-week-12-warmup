@@ -7,8 +7,31 @@ import datetime
 
 
 class InvalidAgeError(Exception):
+    """class IAE docstring."""
     pass
 
+
 def get_age(birthyear):
+    """Age calculated from birthyear.
+    Args:
+        birthyear(int)
+    Returns:
+        age(int) or InvalidAgeError
+    Examples:
+    >>> get_age(2014)
+    1
+    >>> get_age(2016)
+
+    Traceback (most recent call last):
+      File "<pyshell#1>", line 1, in <module>
+        get_age(2016)
+      File "/home/vagrant/Desktop/is210-week-12-warmup/task_02.py",
+          line 24, in get_age
+        raise InvalidAgeError
+    InvalidAgeError
+    """
     age = datetime.datetime.now().year - birthyear
-    return age
+    if age >= 0:
+        return age
+    else:
+        raise InvalidAgeError
