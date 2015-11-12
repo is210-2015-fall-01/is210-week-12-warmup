@@ -24,18 +24,18 @@ class CustomLogger(object):
         try:
             handled = []
             fhandler = open(self.logfilename, 'a')
-        except IOError:
-            raise IOError
+        except IOError as error:
+            self.log('Error opening log ')
+            raise error
+
         try:
             for index, entry in enumerate(self.msgs):
                 fhandler.write(str(entry) + '\n')
                 handled.append(index)
         except IOError:
-            raise IOError
-        try:
-            for index in handled[::-1]:
-                del self.msgs[index]
-        except IOError:
-            raise IOError
-        finally:
-            fhandler.close()
+            self.log('Error writing message ')
+
+        for index in handled[::-1]:
+            del self.msgs[index]
+
+        fhandler.close()
