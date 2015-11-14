@@ -45,26 +45,27 @@ class CustomLogger(object):
             An emty list called handled.
         """
         handled = []
-        try:
-            try:    
-                try:
-                    fhandler = open(self.logfilename, 'a')
-                except (IOError) as error_caught:
-                    self.log("Target log file cannot be opened")
-                    raise error_caught
 
-                for index, entry in enumerate(self.msgs):
-                    fhandler.write(str(entry) + '\n')
-                    handled.append(index)
-            except IOError:
-                self.log("IO Error encountered")
-            else:
-                for index in handled[::-1]:
-                    del self.msgs[index]
-            finally:
-                fhandler.close()
+        try:    
+            try:
+                fhandler = open(self.logfilename, 'a')
+            except IOError as error_caught:
+                self.log("Target log file cannot be opened")
+                raise error_caught
+
+            for index, entry in enumerate(self.msgs):
+                fhandler.write(str(entry) + '\n')
+                handled.append(index)
+        except IOError:
+            self.log("IO Error encountered")
         except:
             self.log("Other Error encountered")
+        else:
+            for index in handled[::-1]:
+                del self.msgs[index]
+        finally:
+            fhandler.close()
+
 
 
 
