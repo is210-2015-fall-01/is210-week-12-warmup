@@ -10,12 +10,12 @@ class CustomLogger(object):
     "Logging class."
 
     def __init__(self, logfilename):
-         """A constructor for class CustomLogger.
+        """A constructor for class CustomLogger.
 
         Args:
             logfilename- name of log file.
-            
-       Attributes:
+
+        Attributes:
            msg(list) - An empty list
         """
         self.logfilename = logfilename
@@ -27,7 +27,7 @@ class CustomLogger(object):
        Args:
            msg(list)- An empty list
            timestamp- defaults to None
-           
+
        Attributes:
           timestamp and msg.
        """
@@ -49,7 +49,7 @@ class CustomLogger(object):
             for index, entry in enumerate(self.msgs):
                 fhandler.write(str(entry) + '\n')
                 handled.append(index)
-            
+
         except IOError:
             self.log('File cannot be written to')
 
