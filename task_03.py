@@ -52,12 +52,13 @@ class CustomLogger(object):
             except IOError as error_caught:
                 self.log("Target log file cannot be opened")
                 raise error_caught
-
-            for index, entry in enumerate(self.msgs):
-                fhandler.write(str(entry) + '\n')
-                handled.append(index)
-        except IOError:
-            self.log("IO Error encountered")
+            else:
+                try:
+                    for index, entry in enumerate(self.msgs):
+                        fhandler.write(str(entry) + '\n')
+                        handled.append(index)
+                except IOError:
+                    self.log("IO Error encountered")
         except:
             self.log("Other Error encountered")
         else:
