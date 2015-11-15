@@ -7,44 +7,48 @@ import time
 
 
 class CustomLogger(object):
-    """Docstring. Constructor. CustomLogger."""
+    """CustomLogger class."""
 
     def __init__(self, logfilename):
+        """Docstring. Constructor. CustomLogger class.
+        Attributes:
+            None
+        Args:
+            longfilename(str)
+            msgs(list)
+        """
         self.logfilename = logfilename
         self.msgs = []
 
     def log(self, msg, timestamp=None):
-        """log method docstring."""
+        """log method docstring.
+        Args:
+            msg: from log
+            timestamp: Unix
+        Returns:
+            A log of messages.
+        """
         if timestamp is None:
             timestamp = time.time()
         self.msgs.append((timestamp, msg))
 
     def flush(self):
-        """flush method docstring."""
+        """flush function docstring."""
         handled = []
 
         try:
             fhandler = open(self.logfilename, 'a')
-        except IOError as error:  # check if called IOError
-            self.log('Can not open file.')  # check if error message
-            raise error
-
-        try:
+        except IOError:
+            self.log('Logfile can not be opened.')
+            raise IOError
+        else:
             for index, entry in enumerate(self.msgs):
-                fhandler.write(str(entry) + '\n')
-                handled.append(index)
-        except IOError as error:  # check2 if called IOError
-            self.log('Can not open file.')
-            raise error  # maybe repeat
+                try:
+                    fhandler.write(str(entry) + '\n')
+                    handled.append(index)
+                except IOError:
+                    self.log('I/O error.Can not write to file.')
 
-        finally:
-            fhandler.close()
-
-        try:
-            for index in handled[::-1]:
-                del self.msgs[index]
-        except IOError:  # check3
-            self.log('Error. Does not remove stored messages.')
-            raise error  # maybe repeat
-        except StandardError as error:  # check4
-            self.log('Another error: {}'.format(error))
+        for index in handled[::-1]:
+            del self.msgs[index]
+        fhandler.close()

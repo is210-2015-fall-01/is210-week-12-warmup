@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""Task 02 module"""
+"""Task 02 module. For Invalid Age error"""
 
 
 import datetime
@@ -14,9 +14,9 @@ class InvalidAgeError(Exception):
 def get_age(birthyear):
     """Age calculated from birthyear.
     Args:
-        birthyear(int)
+        birthyear(int): year born
     Returns:
-        age(int) or InvalidAgeError
+        age(int) or InvalidAgeError, if not valid
     Examples:
     >>> get_age(2014)
     1
